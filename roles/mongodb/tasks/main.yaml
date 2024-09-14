@@ -1,0 +1,22 @@
+- name: Setup mongo db repo file
+  copy: 
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
+- name: Install mongodb
+  package:
+    name: mongodb-org
+    state: present
+- name: Start mongodb and enable mongodg
+  service:
+    name: mongod
+    state: started
+    enabled: yes
+- name: Allow remote connection (replace 127.0.0.1 to 0.0.0.0 in /etc/mongod.conf)
+  replace:
+    path: /etc/mongod.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+- name: Restart mongodb
+  service:
+    name: mongod
+    state: restarted
