@@ -1,0 +1,20 @@
+- name: Create user for roboshop
+  user:
+    name: roboshop
+- name: Recursively remove app directory
+  file:
+    path: /app
+    state: absent 
+- name: Create directory
+  file:
+    path: /app
+    state: directory
+- name: "download {{component}} application"
+  get_url: 
+    url: "https://roboshop-builds.s3.amazonaws.com/{{component}}.zip"
+    dest: /tmp
+- name: "extract {{component}} application"
+  unarchive:
+    src: "/tmp/{{component}}.zip"
+    dest: /app
+    remote_src: yes
