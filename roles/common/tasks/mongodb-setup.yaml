@@ -8,18 +8,24 @@
     state: present
 - name: "get the catalogue entries count"
   command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
-  register: entries_count
+  register: product_count
   when: component == "catalogue"
 
 - name: "get the user entries count"
   command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
-  register: entries_count
+  register: user_count
   when: component == "user"
 
 # - name: print product count
 #   debug: 
 #    msg: "product count: {{product_count}}"
 
-- name: "Load {{component}} data"
+- name: "Load catalogue data"
   command: "mongo --host mongodb.reddy1229.online < /app/schema/{{component}}.js"
-  when: entries_count.stdout == "0" #keep double quote
+  when: product_count.stdout == "0" and component == "catalogue" #keep double quote
+  ignore_errors: true 
+
+- name: "Load user data"
+  command: "mongo --host mongodb.reddy1229.online < /app/schema/{{component}}.js"
+  when: user_count.stdout == "0" and component == "user" #keep double quote
+  ignore_errors: true
