@@ -1,0 +1,12 @@
+- name: disable nodejs and enable nodejs
+  shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+
+- name: Install NodeJS
+  dnf:
+    name: nodejs
+    state: present
+    
+- name: Download dependencies
+    command: npm install
+    args:
+     chdir: /app
