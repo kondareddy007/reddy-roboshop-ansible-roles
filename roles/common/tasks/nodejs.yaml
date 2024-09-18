@@ -7,6 +7,6 @@
     state: present
     
 - name: Download dependencies
-    command: npm install
-    args:
-     chdir: /app
+  command: npm install
+   args:
+    chdir: /app
