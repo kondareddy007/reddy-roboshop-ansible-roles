@@ -1,7 +1,7 @@
 - name: Copy mongodb repo
-    ansible.builtin.copy:
-      src: mongodb.repo
-      dest: /etc/yum.repos.d/mongodb.repo
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongodb.repo
   - name: Install mongodb client
     package:
      name: mongodb-org-shell
@@ -10,7 +10,7 @@
     command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
     register: entries_count
     when: component == "catalogue"
-    
+
   - name: get the entries count
     command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
     register: entries_count
