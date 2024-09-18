@@ -8,5 +8,5 @@
     
 - name: Download dependencies
   command: npm install
-   args:
-    chdir: /app
+  args:
+   chdir: /app
