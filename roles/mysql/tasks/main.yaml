@@ -1,0 +1,23 @@
+- name: Disable mysql
+  command: dnf module disable mysql -y
+- name: setup mysql5.7 repo
+  copy: 
+    src: mysql.repo
+    dest: /etc/yum.repos.d/mysql.repo
+- name: Install mysql-community-server 
+  package:
+    name: mysql-community-server
+    state: present
+- name: Start and enable mysql server
+  service:
+    name: mysqld
+    state: started
+    enabled: yes
+- name: setup root password
+  command: mysql_secure_installation --set-root-pass RoboShop@1
+
+#mysql -h mysql.reddy1229.online -uroot -pRoboShop@1 --to connect the data base
+# show databases; -->to see databases in my sql
+#mysql -h mysql.reddy1229.online -uroot -pRoboShop@1 -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'mysql'"
+#mysql -h mysql.reddy1229.online -uroot -pRoboShop@1 -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'cities'"
+#mysql -h mysql.reddy1229.online -uroot -pRoboShop@1 -sN -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'cities'"
