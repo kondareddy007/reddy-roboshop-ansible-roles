@@ -11,4 +11,3 @@
 - name: load cities data
   shell: "mysql -h {{MYSQL_HOST}} -uroot -p{{mysql_password}}  < /app/schema/shipping.sql"
   when: schema.stdout != "1"
-- name: start and enable shipping
