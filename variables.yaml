@@ -1,1 +1,3 @@
 MONGODB_HOST: mongodb.reddy1229.online
+REDIS_HOST: redis.reddy1229.online
+CATALOGUE_HOST: catalogue.reddy1229.online
