@@ -22,10 +22,10 @@
 
 - name: "Load catalogue data"
   command: "mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js"
-  when: component == "catalogue" and product_count.stdout == "0" and component == "catalogue" #keep double quote
- #ignore_errors: true 
+  when: product_count.stdout == "0" and component == "catalogue" #keep double quote
+ # ignore_errors: true 
 
 - name: "Load user data"
   command: "mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js"
-  when: component == "user"user_count.stdout == "0" and component == "user" #keep double quote
- #ignore_errors: true
+  when: user_count.stdout == "0" and component == "user" #keep double quote
+ # ignore_errors: true
