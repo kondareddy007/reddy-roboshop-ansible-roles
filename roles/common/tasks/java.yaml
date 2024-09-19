@@ -1,0 +1,12 @@
+- name: Install maven
+  dnf:
+    name: maven
+    state: present
+- name: install dependencies
+  command: mvn clean package
+  args:
+    chdir: /app
+- name: Rename jar file
+  command: mv target/{{component}}-{{shipping_version}}.jar {{component}}.jar
+  args:
+    chdir: /app
