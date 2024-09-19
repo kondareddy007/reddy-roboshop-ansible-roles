@@ -1,0 +1,17 @@
+- name: configure yum erlang repos
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash
+- name: configure yum rabbitmq repos
+  shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash
+- name: install rabbitmq server
+  dnf:
+    name: rabbitmq-server
+    state: present
+- name: start and enable rabbitmq
+  service: 
+    name: rabbitmq-server
+    state: restarted
+    enabled: yes
+- name: create rabbitmq user
+  command: rabbitmqctl add_user roboshop roboshop123
+- name: set permissions
+  command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
