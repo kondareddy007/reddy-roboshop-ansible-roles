@@ -7,12 +7,12 @@
     name: mongodb-org-shell
     state: present
 - name: "get the catalogue entries count"
-  command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  command: mongo --host {{MONGODB_HOST}} --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: product_count
   when: component == "catalogue"
 
 - name: "get the user entries count"
-  command: mongo --host mongodb.reddy1229.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+  command: mongo --host {{MONGODB_HOST}} --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
   register: user_count
   when: component == "user"
 
@@ -21,11 +21,11 @@
 #    msg: "product count: {{product_count}}"
 
 - name: "Load catalogue data"
-  command: "mongo --host mongodb.reddy1229.online < /app/schema/{{component}}.js"
-  when: product_count.stdout == "0" and component == "catalogue" #keep double quote
-  ignore_errors: true 
+  command: "mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js"
+  when: component == "catalogue" and product_count.stdout == "0" and component == "catalogue" #keep double quote
+ #ignore_errors: true 
 
 - name: "Load user data"
-  command: "mongo --host mongodb.reddy1229.online < /app/schema/{{component}}.js"
-  when: user_count.stdout == "0" and component == "user" #keep double quote
-  ignore_errors: true
+  command: "mongo --host {{MONGODB_HOST}} < /app/schema/{{component}}.js"
+  when: component == "user"user_count.stdout == "0" and component == "user" #keep double quote
+ #ignore_errors: true
