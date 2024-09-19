@@ -1,3 +1,10 @@
 MONGODB_HOST: mongodb.reddy1229.online
 REDIS_HOST: redis.reddy1229.online
+RABBITMQ_HOST: rabbitmq.reddy1229.online
+MYSQL_HOST: mysql.reddy1229.online
 CATALOGUE_HOST: catalogue.reddy1229.online
+USER_HOST: user.reddy1229.online
+CART_HOST: cart.reddy1229.online
+SHIPPING_HOST: shipping.reddy1229.online
+PAYMENTS_HOST: payment.reddy1229.online
+DISPATCH_HOST: dispatch.reddy1229.online
