@@ -1,47 +1,43 @@
-- name: The Web/Frontend is the service in RoboShop to serve the web content over Nginx.
-  hosts: web
-  become: yes
-  tasks:
-  - name: install nginx
-    ansible.builtin.dnf:
-      name: nginx 
-      state: present
-  
-  - name: remove html directory
-    ansible.builtin.file:
-      path: /usr/share/nginx/html
-      state: absent
+- name: install nginx
+  ansible.builtin.dnf:
+    name: nginx 
+    state: present
 
-  - name: create html directory
-    ansible.builtin.file:
-      path: /usr/share/nginx/html
-      state: directory
+- name: remove html directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: absent
 
-  - name: Download web app
-    ansible.builtin.get_url:
-      url: https://roboshop-builds.s3.amazonaws.com/web.zip
-      dest: /tmp
+- name: create html directory
+  ansible.builtin.file:
+    path: /usr/share/nginx/html
+    state: directory
 
-  - name: Extract application
-    ansible.builtin.unarchive:
-      src: /tmp/web.zip
-      dest: /usr/share/nginx/html
-      remote_src: yes
+- name: Download web app
+  ansible.builtin.get_url:
+    url: https://roboshop-builds.s3.amazonaws.com/web.zip
+    dest: /tmp
 
-  - name: copy roboshop configuration
-    ansible.builtin.copy:
-      src: roboshop.conf
-      dest: /etc/nginx/default.d/roboshop.conf
-  
-  - name: copy roboshop configuration
-    ansible.builtin.templates:
-      src: roboshop.conf.j2
-      dest: /etc/nginx/default.d/roboshop.conf
-    notify:
-    - Restart nginx
+- name: Extract application
+  ansible.builtin.unarchive:
+    src: /tmp/web.zip
+    dest: /usr/share/nginx/html
+    remote_src: yes
 
-  # - name: start and enable nginx
-  #   ansible.builtin.service:
-  #     name: nginx
-  #     state: restarted
-  #     enabled: yes
+# - name: copy roboshop configuration
+#   ansible.builtin.copy:
+#     src: roboshop.conf
+#     dest: /etc/nginx/default.d/roboshop.conf
+
+- name: copy roboshop configuration
+  ansible.builtin.templates:
+    src: roboshop.conf.j2
+    dest: /etc/nginx/default.d/roboshop.conf
+  notify:
+  - Restart nginx
+
+# - name: start and enable nginx
+#   ansible.builtin.service:
+#     name: nginx
+#     state: restarted
+#     enabled: yes
