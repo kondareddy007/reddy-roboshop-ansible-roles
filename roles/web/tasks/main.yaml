@@ -28,16 +28,18 @@
 #   ansible.builtin.copy:
 #     src: roboshop.conf
 #     dest: /etc/nginx/default.d/roboshop.conf
-
+ 
 - name: copy roboshop configuration
-   ansible.builtin.template:
-    src: roboshop.conf.j2
-    dest: /etc/nginx/default.d/roboshop.conf
+  ansible.builtin.template:
+   src: roboshop.conf.j2
+   dest: /etc/nginx/default.d/roboshop.conf
+  notify:
+  - Restart nginx
+# it will restrat when changes is done. There is no changes it will not restart.
 
 
-
-- name: start and enable nginx
-  ansible.builtin.service:
-    name: nginx
-    state: restarted
-    enabled: yes
+# - name: start and enable nginx
+#   ansible.builtin.service:
+#     name: nginx
+#     state: restarted
+#     enabled: yes
